@@ -5,13 +5,14 @@ import { checkValidation } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile  } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { addUser } from '../utils/userSlice';
+import { LOGO } from '../utils/constants';
+import { USER_AVTR } from '../utils/constants';
 
 
 const Login = () => {
 
-    const navigate = useNavigate();
+    
 
     const dispatch = useDispatch();
 
@@ -48,12 +49,12 @@ const Login = () => {
                 const user = userCredential.user;
 
                 updateProfile(user, {
-                    displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/34788679?v=4"
+                    displayName: name.current.value, photoURL: USER_AVTR
                   }).then(() => {
 
                     const {uid, email, displayName, photoURL} = auth.currentUser;
                     dispatch(addUser({uid : uid, email : email, displayName : displayName, photoURL : photoURL}))
-                    navigate("/browse");
+                    // navigate("/browse");
                     // Profile updated!
                     // ...
                   }).catch((error) => {
@@ -79,7 +80,7 @@ const Login = () => {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user);
-                navigate("/browse");
+                // navigate("/browse");
                 // ...
             })
             .catch((error) => {
@@ -98,7 +99,7 @@ const Login = () => {
     <div>
         <Header/>
         <div className='absolute'>
-            <img src="https://assets.nflxext.com/ffe/siteui/vlv3/9db4a880-3034-4e98-bdea-5d983e86bf52/b5953637-091d-4e02-9754-2bfadc8a8f7c/IN-en-20230925-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+            <img src={LOGO}
             alt='logo'/>
         </div>
         <form onSubmit={(e) => e.preventDefault()} className='absolute p-14 bg-black w-3/12 mx-auto my-48 right-0 left-0  text-white rounded-md bg-opacity-80'>
